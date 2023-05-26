@@ -1,8 +1,9 @@
 package com.oneable.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.oneable.exception.CourseNotFoundException;
@@ -34,8 +35,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<Course> getAllCourse() {
-		List<Course> list=repository.findAll();
+	public Page<Course> getAllCourse(Pageable p) {
+		Page<Course> list= repository.findAll(p);
 		return list;
 	}
 

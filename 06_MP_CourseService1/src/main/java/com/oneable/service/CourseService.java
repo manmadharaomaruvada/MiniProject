@@ -1,6 +1,8 @@
 package com.oneable.service;
 
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.oneable.model.Course;
 
@@ -8,5 +10,5 @@ public interface CourseService {
 
 	public Integer saveCourse(Course c);
 	public Course getOneCourse(Integer id);
-	public List<Course> getAllCourse();
+	public Page<Course> getAllCourse(Pageable p);
 }

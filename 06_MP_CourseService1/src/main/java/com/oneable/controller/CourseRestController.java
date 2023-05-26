@@ -1,8 +1,13 @@
 package com.oneable.controller;
 
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,4 +72,24 @@ public class CourseRestController {
 		return resp;
 	}
 	//3. Fetch All Courses
+	// http://ojas-dd460.corp.ojas-it.com:8090/course/all?page=2&size=1&sort=cname
+	@GetMapping("/all")
+	public ResponseEntity<?> getAllCourses(
+			@PageableDefault(page = 0,size = 3) Pageable pageable){
+		LOG.info("Entered into GET ALL COURSE method");
+		ResponseEntity<?> resp=null;
+		try {
+			Page<Course> page=service.getAllCourse(pageable);
+			resp=ResponseEntity.ok(page);
+			LOG.info("COURSE OBJECT IS SELECTED {} ", page);
+		} catch (Exception e) {
+			LOG.info("UNABLE TO FETCH COURSES {}",e.getMessage());
+			resp=new ResponseEntity<String>("Unable to FETCH course ", 
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+		LOG.info("RETURNING BACK FROM GET ALL COURSE METHOD");
+		return resp;
+		 
+	}
 }
